@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <unordered_map>
 #include <iomanip>
@@ -9,17 +9,21 @@ class Book {
 public:
 	Book() : page_read_use_(1001, 0) {};
 		
-	void Read() {
+	void Read(istream& in) {
 		int val;
-		cin >> val;
+		in >> val;
 		for (int i = 0; i < val; i++) {
 			string command;
-			cin >> command;
+			in >> command;
 			if (command == "READ") {
-				ReadUsePage();
+				int use_id, page;
+				in >> use_id >> page;
+				ReadUsePage(use_id, page);
 			}
 			else if (command == "CHEER") {
-				CheerUse();
+				int use_id;
+				in >> use_id;
+				CheerUse(use_id);
 			}
 			else {
 				cout << "Error command";
@@ -27,9 +31,7 @@ public:
 		}
 	}
 private:
-	void ReadUsePage() {
-		int use_id, page;
-		cin >> use_id >> page;
+	void ReadUsePage(int use_id, int page) {
 		int page_lost = use_page_[use_id];
 		if (page_lost == 0) {
 			peaple_++;
@@ -40,9 +42,7 @@ private:
 		}
 
 	}
-	void CheerUse() {
-		int use_id;
-		cin >> use_id;
+	void CheerUse(int use_id) {
 		if (use_page_[use_id] == 0) {
 			cout << 0 << endl;
 		}
@@ -58,6 +58,12 @@ private:
 	int peaple_ = 0;
 
 };
+
+
+int main() {
+	Book book;
+	book.Read(cin);
+}
 
 
 int main() {
