@@ -8,7 +8,7 @@ using namespace std;
 class Boock {
 public:
 	Boock() : page_read_use_(1001, 0) {};
-		
+
 	void ReadUsePage(int use_id, int page) {
 		int page_lost = use_page_[use_id];
 		if (page_lost == 0) {
@@ -27,19 +27,17 @@ public:
 		else if (peaple_ == 1) {
 			return 1.0;
 		}
-		else {
-			return  1.0 - static_cast<double>(page_read_use_[use_page_[use_id]] - 1) / (peaple_ - 1);
-		}
+		return  1.0 - static_cast<double>(page_read_use_[use_page_[use_id]] - 1) / (peaple_ - 1);
 	}
 private:
-	
-	unordered_map<int,int> use_page_;
+
+	unordered_map<int, int> use_page_;
 	vector<int> page_read_use_;
 	int peaple_ = 0;
 
 };
 
-void Read(istream& in, Boock boock) {
+void Read(istream& in, Boock& boock) {
 	int val;
 	in >> val;
 	for (int i = 0; i < val; i++) {
