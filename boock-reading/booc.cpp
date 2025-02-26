@@ -5,32 +5,10 @@
 
 using namespace std;
 
-class Book {
+class Boock {
 public:
-	Book() : page_read_use_(1001, 0) {};
+	Boock() : page_read_use_(1001, 0) {};
 		
-	void Read(istream& in) {
-		int val;
-		in >> val;
-		for (int i = 0; i < val; i++) {
-			string command;
-			in >> command;
-			if (command == "READ") {
-				int use_id, page;
-				in >> use_id >> page;
-				ReadUsePage(use_id, page);
-			}
-			else if (command == "CHEER") {
-				int use_id;
-				in >> use_id;
-				CheerUse(use_id);
-			}
-			else {
-				cout << "Error command";
-			}
-		}
-	}
-private:
 	void ReadUsePage(int use_id, int page) {
 		int page_lost = use_page_[use_id];
 		if (page_lost == 0) {
@@ -42,31 +20,49 @@ private:
 		}
 
 	}
-	void CheerUse(int use_id) {
+	double CheerUse(int use_id) {
 		if (use_page_[use_id] == 0) {
-			cout << 0 << endl;
+			return 0.0;
 		}
 		else if (peaple_ == 1) {
-			cout << 1 << endl;
+			return 1.0;
 		}
 		else {
-			cout << setprecision(6) << 1.0 - static_cast<double>(page_read_use_[use_page_[use_id]] - 1) / (peaple_ - 1) << endl;
+			return  1.0 - static_cast<double>(page_read_use_[use_page_[use_id]] - 1) / (peaple_ - 1);
 		}
 	}
+private:
+	
 	unordered_map<int,int> use_page_;
 	vector<int> page_read_use_;
 	int peaple_ = 0;
 
 };
 
-
-int main() {
-	Book book;
-	book.Read(cin);
+void Read(istream& in, Boock boock) {
+	int val;
+	in >> val;
+	for (int i = 0; i < val; i++) {
+		string command;
+		in >> command;
+		if (command == "READ") {
+			int use_id, page;
+			in >> use_id >> page;
+			boock.ReadUsePage(use_id, page);
+		}
+		else if (command == "CHEER") {
+			int use_id;
+			in >> use_id;
+			setprecision(6);
+			cout << boock.CheerUse(use_id) << endl;
+		}
+		else {
+			cout << "Error command";
+		}
+	}
 }
 
-
 int main() {
-	Book book;
-	book.Read();
+	Boock boock;
+	Read(cin, boock);
 }
